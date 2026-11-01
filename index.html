@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketing QCM</title>
+<style>
+  :root { --bg:#fafafa; --fg:#1a1a1a; --card:#fff; --line:#d8d8d8; --ok:#1f9d55; --okbg:#e3f6ea; --ko:#d64545; --kobg:#fbe5e5; --accent:#2b5fd9; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#141414; --fg:#eee; --card:#1f1f1f; --line:#3a3a3a; --ok:#4cc380; --okbg:#173326; --ko:#ef7676; --kobg:#3a1c1c; --accent:#7ba0ff; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 system-ui,sans-serif; }
+  main { max-width:640px; margin:0 auto; padding:24px 16px 48px; }
+  h1 { font-size:1.4rem; margin:0 0 4px; }
+  .muted { color:#888; font-size:.9rem; }
+  button { font:inherit; color:inherit; cursor:pointer; }
+  .opt { display:block; width:100%; text-align:left; margin:8px 0; padding:12px 14px; background:var(--card); border:1px solid var(--line); border-radius:8px; }
+  .opt:hover:not(:disabled) { border-color:var(--accent); }
+  .opt.ok { background:var(--okbg); border-color:var(--ok); }
+  .opt.ko { background:var(--kobg); border-color:var(--ko); }
+  .main-btn { margin-top:16px; padding:10px 20px; background:var(--accent); color:#fff; border:0; border-radius:8px; }
+  .bar { height:6px; background:var(--line); border-radius:3px; margin:8px 0 20px; }
+  .bar div { height:100%; background:var(--accent); border-radius:3px; }
+  .q { font-size:1.1rem; font-weight:600; margin:0 0 12px; }
+  .review { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:10px 14px; margin:10px 0; }
+  .review b.ko { color:var(--ko); } .review b.ok { color:var(--ok); }
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+// Chaque question : [question, bonne réponse, mauvaise 1, mauvaise 2, mauvaise 3]
+// Pour en ajouter : copie une ligne dans POOL. L'ordre des réponses est mélangé automatiquement.
+const POOL = [
+// ---------- Intro to Marketing ----------
+["In the 4 phases of marketing evolution, which orientation corresponds to 1970–2000?","Market","Production","Sales","Consumer"],
+["The 1948 definition of marketing was focused on…","The distribution of goods and services from producers to consumers","Building long-term relationships with customers","Creating value for society and the environment","Influencing consumer behaviour through perceived value"],
+["The 1985 definition of marketing stresses…","Developing, pricing, promoting and distributing an idea, product or service for a mutually satisfactory exchange","Only the sale of goods from producers to consumers","Creating value for the planet and society above all","Adapting to new technologies and competitors"],
+["Perceived value is…","The maximum price a consumer is willing to pay, which can be unrelated to the actual value of the product","The production cost plus the company's margin","The price displayed on the product","The average price charged by the competition"],
+["Which of these is NOT an element of perceived value?","The company's internal production costs","The brand's image","The quality of the product / service","Customer satisfaction and reviews"],
+["After purchase, what does dissatisfaction increase?","The likelihood of defection (switching to a competitor)","The purchase intention","The perceived value","The brand awareness"],
+["The extended marketing funnel (relationship marketing) adds which stages?","Loyalty and advocacy","Awareness and interest","Desire and action","Price and promotion"],
+["Marketing has gone through two major changes. Which pair is correct?","From product-focused to consumer-focused, and from transactional to relationship marketing","From consumer-focused to product-focused, and from relationship to transactional marketing","From local to international, and from B2C to B2B","From offline to online, and from goods to services"],
+["Which is an example of OPERATIONAL (rather than strategic) marketing?","Adapting messages to each local market","Choosing which markets to enter","Repositioning the brand against its competitors","Deciding on areas of innovation"],
+["Which statement correctly defines ETHICAL MARKETING (as opposed to marketing ethics)?","Rallying consumers to support an ethically interesting cause through the purchase of products and services","A set of moral principles guiding marketing decisions without being communicated","The laws and regulations that govern advertising","A company's internal code of conduct"],
+["What is the correct order of the marketing process?","Analysis → Strategic → Development → Operational","Strategic → Analysis → Development → Operational","Analysis → Development → Strategic → Operational","Development → Analysis → Strategic → Operational"],
+["According to Peter Drucker, marketing is…","So fundamental that it must be woven throughout the company, from the client's point of view","Just another word for communications","The outward-facing department that supports the sales team","The least important function in a company"],
+["According to the course, the 'secret of success' is made of which 3 core elements?","The right message, to the right target audience, on the right media","The right product, at the right price, in the right place","The right budget, the right agency, the right timing","The right brand, the right logo, the right slogan"],
+["Kate Raworth's 'Doughnut Economics' invites us to prosper within…","A social floor and an environmental ceiling","A price floor and a sales ceiling","A legal floor and a political ceiling","A growth floor and a profit ceiling"],
+["Which of these is a service with little or no hardware component?","Hairdressing","Mobile phones","Self-service petrol stations","Laundromats"],
+["Which type of market involves businesses selling to professional purchasers?","Business to Business (B2B)","Mass market (B2C)","International market","Not-for-profit market"],
+["Why did Nokia fail, according to the course?","It underestimated software and the smartphone revolution, and overestimated its brand","Its hardware was of poor quality","It was banned from the American market","Its prices were far higher than Apple's"],
+// ---------- Market Analysis: market definition & size ----------
+["What is the difference between market analysis and market research?","Analysis studies an industry / market (external, strategic); research studies a specific target market, usually to answer a specific question","Analysis studies a specific target market; research studies the whole industry","There is no difference","Analysis is about internal company data; research is about competitors only"],
+["Which is NOT a purpose of market analysis?","To eliminate all competition","To reduce risk","To capitalise on trends","To make informed decisions"],
+["According to David Skok, a major reason why start-ups fail is that…","There is little or no market for the product they have built","They have too many competitors","They charge too little","They spend too much on advertising"],
+["Which are the 5 types of market?","Generic, support, main, complementary, substitute","Generic, main, niche, mass, substitute","B2C, B2B, International, Not-for-profit, Online","Leader, challenger, follower, nicher, generic"],
+["What is an induced (captive) market?","A market where, once the consumer owns the product, they must use the same company's products (refills, accessories) to benefit from it","A market with a huge number of substitutes","A market whose prices are set by the state","A market created only through advertising"],
+["In a captive (induced) market, the main product is typically…","Sold at a low price (loss leader), with refills / accessories sold at a higher margin","Sold at a high price, with cheap refills","Sold at the same price as its refills","Given away for free, with no refills"],
+["What is the difference between a substitute and a complementary market?","Substitute products satisfy the same need and can replace the main product; complementary products are used alongside it","Substitute products are used alongside the main product; complementary products replace it","Substitute products are cheaper copies by the same brand; complementary products are premium","There is no difference"],
+["A brand sells digital SLR cameras (main market). Which products belong to the SUBSTITUTE market?","Smartphones, GoPros, drones, tablets","Chargers, lenses, SD cards","Printers and photo paper","Cameras (photography) in general"],
+["What are the main measures of market size?","Volume, value and market share","Revenue, profit and headcount","Penetration, loyalty and advocacy","Reach, frequency and clicks"],
+["How is market size by VALUE calculated?","Average selling price × volume sold","Number of buyers ÷ average price","Volume sold ÷ average price","Market share × penetration rate"],
+["How is market size by VOLUME calculated?","Number of buyers × average quantity bought","Average selling price × volume sold","Total revenue ÷ number of competitors","Number of buyers ÷ average quantity bought"],
+["A market was worth CHF 80M last year and CHF 100M this year. What is the evolution rate?","25%","20%","80%","125%"],
+["Why is it important to understand the evolution of a market?","To know whether it is growing or shrinking and to spot trends and opportunities","To set the daily price of the product","To find out the competitors' internal costs","To choose the brand's colours"],
+["What is the purpose of offer segmentation (by size, flavour, packaging, channel…)?","To understand the structure of the market and see where competition and opportunities lie","To split consumers into psychographic target groups","To carry out a PESTEL analysis","To set the price of the product"],
+["What are the two main parts of the ANALYSIS phase of the marketing process?","Understanding the market (dynamics, environment, competitors, demand) and understanding consumers (needs, motivations, habits)","Developing the marketing mix and measuring success","Identifying the target audience and the positioning","Creating value and building customer relationships"],
+// ---------- Potential & lifecycle ----------
+["Which type of customer is excluded when assessing a market's potential?","Absolute non-consumers","Relative non-consumers","Competitors' customers","The brand's own customers"],
+["In the Haribo example, who are the ABSOLUTE non-consumers?","People allergic to the food colourings used in sweets","Children who are too young to eat sweets","Adults who have never been attracted by sweets","Consumers who buy Lutti or Krema"],
+["In a country of 300 million inhabitants, 65 million own a mobile phone. What is the penetration rate?","About 22%","About 65%","About 78%","About 4.6%"],
+["3 million people use a product out of a total addressable market of 12 million. What is the penetration rate?","25%","4%","75%","36%"],
+["Own customers: 100 people / CHF 200. Competitors' customers: 300 / CHF 600. Relative non-consumers: 400 / CHF 800. Absolute non-consumers: 800 / CHF 1600. What is the POTENTIAL market value?","CHF 1600 (consumers + relative non-consumers)","CHF 800","CHF 3200 (everyone)","CHF 200"],
+["Same data (own 100, competitors 300, relative non-consumers 400, absolute non-consumers 800). What is the market penetration rate?","50% (400 consumers out of a target population of 800)","25%","12.5%","75%"],
+["Which phase of a market's lifecycle has the highest penetration rate?","Maturity","Launch","Growth","Decline"],
+["Which is a typical marketing approach at the LAUNCH phase?","Increase awareness, use penetration pricing and target early adopters","Raise prices to maximise profitability","Force upgrades with a new model every year","Abandon the product"],
+["Vinyl records have declined but became a very profitable niche for collectors. Which lifecycle strategy does this illustrate?","Decline: managing the decline by targeting a niche market","Launch: penetration pricing to encourage trial","Growth: moving from a niche to a mass market","Maturity: raising prices to maximise profitability"],
+// ---------- Competition ----------
+["What is the first step of a competitor analysis?","Identify the products or services of direct, indirect and potential competitors","Calculate your own profit margin","Write the brand's advertising slogan","Set the price of your product"],
+["A brand makes CHF 30M in revenue in a market worth CHF 200M in total. What is its market share (by value)?","15%","6.7%","30%","85%"],
+["Which competitor positioning is inventive and creative, and generally breaks established codes to take the lead?","Market challenger","Market leader","Market follower","Market nicher"],
+["Which competitor positioning is content to follow the leader, usually cheaper, and profitable through imitation rather than innovation?","Market follower","Market leader","Market challenger","Market nicher"],
+["What kind of strategy does a MARKET LEADER typically develop?","Defensive strategies to prevent competitors from taking its market share","Aggressive code-breaking to overturn the leader","Cost reduction to imitate the leader","Education of a very small, specialised audience"],
+["What does a market NICHER typically focus on?","Increasing loyalty and possibly educating consumers to change their habits","Winning the mass market","Copying the leader at a lower price","Defending a dominant market share"],
+["In Porter's 5 Forces, the strength of the 5 forces determines…","The competitive intensity (and so the attractiveness) of the market","The brand's market share","The size of the market","The brand's PESTEL score"],
+["Which of these is NOT one of Porter's 5 Forces?","Technological change","Threat of new entrants","Bargaining power of suppliers","Threat of substitutes"],
+["A supply chain is…","The network of all individuals, organisations, resources, activities and technologies involved in creating and selling a product, from raw materials to the end user","The list of a company's direct competitors","The sequence of the 4Ps","The set of laws that apply to distribution"],
+// ---------- Environment / PESTEL ----------
+["Which are the 6 elements of a PESTEL?","Political, Economic, Social, Technological, Environmental, Legal","Product, Economic, Social, Technological, Environmental, Legal","Political, Ethical, Social, Targeting, Environmental, Legal","Price, Economic, Social, Technological, Ethical, Legal"],
+["Why is a PESTEL analysis important?","It identifies external macro-environmental forces that create opportunities and threats, so the brand can make informed decisions","It calculates the brand's market share","It measures the strength of competition between rivals","It evaluates the company's internal resources and financial strength"],
+["Does a PESTEL help understand the micro or the macro environment?","The macro environment","The micro environment","The company's internal environment","The competitors' product range only"],
+["Which list contains 3 typical marketing situations for using a PESTEL?","Entering a new market, launching a new product, building a strategic marketing plan","Setting daily prices, hiring staff, designing a logo","Calculating market share, choosing a font, negotiating with suppliers","Training the sales team, ordering stock, answering customer emails"],
+["What is the difference between the legal and political components of a PESTEL?","Legal = laws and regulations governing company conduct (e.g. data protection law); Political = relationship between business and government (e.g. trade restrictions, a war)","Legal = relationship between business and government; Political = laws governing company conduct","Legal = internal company rules; Political = laws of other countries","There is no difference"],
+["Which of these is a LEGAL factor (rather than a political one)?","A law protecting the use of consumer data","Trade restrictions imposed on a country","The outbreak of a war","A change of government"],
+["Which group belongs to the MICRO-environment (external forces directly linked to the business)?","Suppliers, distributors, customers, partners, competitors, media, investors","Politics, economy, society, technology","Resources, financial strength, R&D, production","Laws, regulations and climate change"],
+["Which factors of the marketing environment are largely controllable by the company?","Internal factors (resources, financial strength, R&D, production)","Political and legal factors","Competitors' decisions","Consumer attitudes"],
+["In which of the 4 phases of the marketing process is a PESTEL used?","The analysis phase","The strategic phase","The development phase","The operational phase"],
+["How does the information from a PESTEL influence the marketing process?","It informs strategic decisions and the marketing mix by revealing opportunities and threats the brand must adapt to","It doesn't: PESTEL factors are controlled by the brand","It only determines the price of the product","It replaces consumer research"],
+["In a recession, which message is likely to be most effective?","A value message","A luxury message","A message about exclusivity","No message at all"],
+["Amazon's sales rose 25% during the 2009 recession because…","Being online, it offered more products at lower prices, focused on customer service and innovated with the Kindle","It closed all its warehouses","It stopped selling books","It raised prices on all products"],
+["Groupon, launched in November 2008, succeeded because…","It gave consumers daily offers to save money and businesses an inexpensive way to attract new customers","It sold luxury goods to wealthy consumers","It was bought by Google for $6 billion","It copied Amazon's Kindle"],
+["Which are the 4 key socio-cultural forces for marketing?","Demographic changes, cultural differences, changing consumer attitudes & experiences, influence of consumerism","Age, gender, income, location","Politics, law, economy, technology","Product, price, place, promotion"],
+["How does consumerism affect brands?","It can force brands to change products or practices (less sugar, palm-oil-free, recyclable…): a threat as much as an opportunity","It has no effect: brands decide independently","It only affects prices, never products","It is only ever a threat"],
+["Define consumerism.","The power of consumers to influence companies (e.g. pressure to reduce sugar in cereals)","Excessive buying of goods and services","A strategy used by companies to increase sales","The study of consumer demographics"],
+["Why is consumer activation easier than ever?","Digital and social media let consumers share opinions and mobilise quickly","Brands have smaller advertising budgets","Laws oblige consumers to join groups","There are fewer competitors"],
+["Technology affects marketing in 4 ways. Which list is correct?","New products, new production methods, new distribution methods, new ways of communicating","New laws, new taxes, new competitors, new suppliers","New prices, new packaging, new logos, new slogans","New cultures, new values, new religions, new lifestyles"],
+["In the Unilever study (20,000 adults), what share said they would actively choose brands with credible sustainability credentials?","Over 30%","Around 10%","Over 50%","Around 75%"],
+["What does the course say about 'greenwashing'?","Being 'green' isn't enough: the product must meet a real need AND be genuinely respectful of the environment","It is the best way to attract eco-conscious consumers","It is legal and ethical as long as it sells","It only concerns the food industry"],
+["A good PESTEL analysis should…","Contextualise the factors, keep only those with a significant impact, be specific and draw conclusions","List as many factors as possible","Only list political factors","Avoid conclusions to stay neutral"]
+];
+
+const N = 20;
+const app = document.getElementById("app");
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const el = (tag, props={}, ...kids) => { const e=document.createElement(tag); Object.assign(e,props); kids.forEach(k=>e.append(k)); return e; };
+
+let quiz, idx, score, wrong;
+
+function start() {
+  quiz = shuffle(POOL).slice(0, N).map(([q, good, ...bad]) => ({ q, good, opts: shuffle([good, ...bad]) }));
+  idx = 0; score = 0; wrong = [];
+  show();
+}
+
+function home() {
+  app.replaceChildren(
+    el("h1", {textContent:"Marketing QCM"}),
+    el("p", {className:"muted", textContent:`Intro to Marketing & Market Analysis · ${POOL.length} questions dans la banque, ${N} tirées au hasard à chaque fois.`}),
+    el("button", {className:"main-btn", textContent:"Commencer", onclick:start})
+  );
+}
+
+function show() {
+  if (idx >= quiz.length) return end();
+  const item = quiz[idx];
+  const bar = el("div", {className:"bar"}, el("div", {style:`width:${idx/quiz.length*100}%`}));
+  const box = el("div");
+  const next = el("button", {className:"main-btn", textContent: idx+1===quiz.length ? "Voir le score" : "Suivant", hidden:true, onclick:()=>{ idx++; show(); }});
+  const buttons = item.opts.map(o => {
+    const b = el("button", {className:"opt", textContent:o});
+    b.onclick = () => {
+      buttons.forEach(x => { x.disabled = true; if (x.textContent === item.good) x.classList.add("ok"); });
+      if (o === item.good) score++; else { b.classList.add("ko"); wrong.push({q:item.q, mine:o, good:item.good}); }
+      next.hidden = false;
+    };
+    return b;
+  });
+  box.append(...buttons);
+  app.replaceChildren(
+    el("div", {className:"muted", textContent:`Question ${idx+1} / ${quiz.length} · score ${score}`}),
+    bar,
+    el("p", {className:"q", textContent:item.q}),
+    box, next
+  );
+}
+
+function end() {
+  const out = [
+    el("h1", {textContent:`Score : ${score} / ${quiz.length}`}),
+    el("button", {className:"main-btn", textContent:"Recommencer (nouvelles questions)", onclick:start})
+  ];
+  if (wrong.length) out.push(el("h2", {textContent:"À revoir"}));
+  wrong.forEach(w => out.push(el("div", {className:"review"},
+    el("div", {textContent:w.q}),
+    el("div", {}, el("b", {className:"ko", textContent:"Ta réponse : "}), w.mine),
+    el("div", {}, el("b", {className:"ok", textContent:"Bonne réponse : "}), w.good)
+  )));
+  app.replaceChildren(...out);
+}
+
+home();
+</script>
+</body>
+</html>
